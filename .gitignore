@@ -1,8 +1,9 @@
 # IDE specific
 .idea
+.gradle
 
 # Build atrifacts
-target
+build
 
 # Compiled class file
 *.class
