@@ -15,7 +15,7 @@ gradlew package
 ## Running
 To run the SpringBoot application, use the following command:
 ```
-gradlew run
+gradlew bootRun
 ```
 
 To test the the project, use the following command:
