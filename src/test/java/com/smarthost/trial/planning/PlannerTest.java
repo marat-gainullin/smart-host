@@ -37,4 +37,46 @@ public class PlannerTest {
         Assertions.assertEquals(7, planned.getPremiumRooms());
         Assertions.assertEquals(1, planned.getEconomyRooms());
     }
+
+    @Test
+    public void premiumUnavailableEconomy1() {
+        Occupation planned = Planner.optimal(0, 1, OFFERS);
+        Assertions.assertEquals(0, planned.getPremiumRooms());
+        Assertions.assertEquals(1, planned.getEconomyRooms());
+    }
+
+    @Test
+    public void premiumUnavailableEconomyUnavailable() {
+        Occupation planned = Planner.optimal(0, 0, OFFERS);
+        Assertions.assertEquals(0, planned.getPremiumRooms());
+        Assertions.assertEquals(0, planned.getEconomyRooms());
+    }
+
+    @Test
+    public void premium1EconomyUnavailable() {
+        Occupation planned = Planner.optimal(1, 0, OFFERS);
+        Assertions.assertEquals(1, planned.getPremiumRooms());
+        Assertions.assertEquals(0, planned.getEconomyRooms());
+    }
+
+    @Test
+    public void perfectFit() {
+        Occupation planned = Planner.optimal(6, 4, OFFERS);
+        Assertions.assertEquals(6, planned.getPremiumRooms());
+        Assertions.assertEquals(4, planned.getEconomyRooms());
+    }
+
+    @Test
+    public void fullUpgrades() {
+        Occupation planned = Planner.optimal(8, 2, OFFERS);
+        Assertions.assertEquals(8, planned.getPremiumRooms());
+        Assertions.assertEquals(2, planned.getEconomyRooms());
+    }
+
+    @Test
+    public void someUpgrades() {
+        Occupation planned = Planner.optimal(8, 3, OFFERS);
+        Assertions.assertEquals(7, planned.getPremiumRooms());
+        Assertions.assertEquals(3, planned.getEconomyRooms());
+    }
 }
