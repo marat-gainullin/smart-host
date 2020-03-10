@@ -28,7 +28,7 @@ public class OccupationsTest {
 
     @Test
     public void aParameterOfWrongType() throws Exception {
-        restMock.perform(get("/occupations/optimal?availableEconomy=uiim&availablePremium=uiim"))
+        restMock.perform(get("/occupations/optimal?availableEconomy=uiim&availablePremium=rtim"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(containsString("NumberFormat")));
