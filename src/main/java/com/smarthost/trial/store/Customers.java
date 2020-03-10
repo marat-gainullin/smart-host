@@ -7,9 +7,9 @@ import java.util.List;
 @Repository
 public class Customers {
 
-    private static final List<Integer> CLIENTS_OFFERS = List.of(23, 45, 155, 374, 22, 99, 100, 101, 115, 209);
+    private static final Iterable<Integer> CLIENTS_OFFERS = List.of(23, 45, 155, 374, 22, 99, 100, 101, 115, 209);
 
-    public List<Integer> getOffers() {
+    public Iterable<Integer> getOffers() {
         return CLIENTS_OFFERS;
     }
 }

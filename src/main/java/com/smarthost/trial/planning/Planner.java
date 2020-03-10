@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Planner {
 
-    public static Occupation optimal(int availablePremiumRooms, int availableEconomyRooms, List<Integer> offers) {
+    public static Occupation optimal(int availablePremiumRooms, int availableEconomyRooms, Iterable<Integer> offers) {
         var economyGuests = 0;
         var premiumGuests = 0;
         for (var offer : offers) {

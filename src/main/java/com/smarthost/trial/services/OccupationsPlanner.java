@@ -16,6 +16,6 @@ public class OccupationsPlanner {
     private Customers customers;
 
     public Occupation optimal(int availablePremiumRooms, int availableEconomyRooms) {
-        return new Planner().optimal(availablePremiumRooms, availableEconomyRooms, customers.getOffers());
+        return Planner.optimal(availablePremiumRooms, availableEconomyRooms, customers.getOffers());
     }
 }
