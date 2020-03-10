@@ -23,8 +23,8 @@ public class Occupations {
     private OccupationsPlanner planner;
 
     @GetMapping(path = "/occupations/optimal")
-    public Occupation findAnOptimalOccupation(@RequestParam(name = "availableEconomy") int availableEconomy, @RequestParam(name = "availablePremium") int availablePremium) {
-        return planner.optimal(availableEconomy, availablePremium);
+    public Occupation findAnOptimalOccupation(@RequestParam(name = "availableEconomy") int availableEconomyRooms, @RequestParam(name = "availablePremium") int availablePremiumRooms) {
+        return planner.optimal(availablePremiumRooms, availableEconomyRooms);
     }
 
     @ExceptionHandler

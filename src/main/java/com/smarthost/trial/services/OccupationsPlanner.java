@@ -1,6 +1,9 @@
 package com.smarthost.trial.services;
 
 import com.smarthost.trial.model.Occupation;
+import com.smarthost.trial.planning.Planner;
+import com.smarthost.trial.store.Customers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,7 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class OccupationsPlanner {
 
-    public Occupation optimal(int freeEconomyRooms, int freePremiumRooms){
-        return new Occupation(freeEconomyRooms, freePremiumRooms);
+    @Autowired
+    private Customers customers;
+
+    public Occupation optimal(int availablePremiumRooms, int availableEconomyRooms) {
+        return new Planner().optimal(availablePremiumRooms, availableEconomyRooms, customers.getOffers());
     }
 }
