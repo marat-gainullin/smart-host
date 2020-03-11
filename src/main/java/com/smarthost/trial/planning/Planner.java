@@ -1,36 +1,62 @@
 package com.smarthost.trial.planning;
 
 import com.smarthost.trial.model.Occupation;
+import com.smarthost.trial.model.SortedBag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class Planner {
+/**
+ * Planner implementation.
+ * Hotel clients have two different categories of rooms: Premium and Economy.
+ * Hotels want their customers to be satisfied: they will not book a customer willing to pay EUR 100 or more for the night into an Economy room.
+ * But they will book lower paying customers into Premium rooms if these rooms would be empty and all Economy rooms will be filled by low paying customers.
+ * Highest paying customers below EUR 100 will get preference for the “upgrade”.
+ * Customers always only have one specific price they are willing to pay for the night.
+ */
+public final class Planner {
 
-    public static Occupation optimal(int availablePremiumRooms, int availableEconomyRooms, Iterable<Integer> offers) {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Planner.class);
+
+    /**
+     * Plans optimal use of premium and economy rooms. Takes into account, that there are might be same prices for different customers.
+     *
+     * @param availablePremiumRooms The number of available premium rooms.
+     * @param availableEconomyRooms The number of available economy rooms.
+     * @param premiumOffers         {@link SortedBag} of premium offers from customers.
+     * @param economyOffers         {@link SortedBag} of economy offers from customers.
+     * @return {@link Occupation} instance, describing planned occupation in terms of rooms and money.
+     */
+    public static Occupation optimal(int availablePremiumRooms, int availableEconomyRooms, SortedBag<Integer> premiumOffers, SortedBag<Integer> economyOffers) {
+        if (availablePremiumRooms < 0) {
+            throw new IllegalArgumentException("'availablePremiumRooms' can't be less than zero");
+        }
+        if (availableEconomyRooms < 0) {
+            throw new IllegalArgumentException("'availableEconomyRooms' can't be less than zero");
+        }
         var plannedPremiumRooms = 0;
         var plannedEconomyRooms = 0;
-        var economyGuests = 0;
-        var economyRoomsSum = 0;
-        var premiumGuests = 0;
-        var premiumRoomsSum = 0;
-        var upgradedRoomsSum = 0;
-        for (var offer : offers) {
-            if (offer >= 100) {
-                premiumGuests++;
-                if (plannedPremiumRooms < availablePremiumRooms) {
-                    plannedPremiumRooms++;
-                    premiumRoomsSum += offer;
-                }
-            } else {
-                economyGuests++;
-                if (plannedEconomyRooms < availableEconomyRooms) {
-                    plannedEconomyRooms++;
-                    economyRoomsSum += offer;
-                } else if (plannedPremiumRooms < availablePremiumRooms) {
-                    plannedPremiumRooms++;
-                    upgradedRoomsSum += offer;
-                }
+        var plannedEconomyRoomsSum = 0;
+        var plannedPremiumRoomsSum = 0;
+        for (var price : premiumOffers) {
+            if (plannedPremiumRooms < availablePremiumRooms) {
+                plannedPremiumRooms++;
+                plannedPremiumRoomsSum += price;
+                LOGGER.info("Premium room planned for {}", price);
             }
         }
-        return new Occupation(plannedPremiumRooms, premiumRoomsSum, plannedEconomyRooms, economyRoomsSum);
+        int missingEconomyRooms = economyOffers.size() - availableEconomyRooms;
+        for (var price : economyOffers) {
+            if (missingEconomyRooms-- > 0 && plannedPremiumRooms < availablePremiumRooms) {
+                plannedPremiumRooms++;
+                plannedPremiumRoomsSum += price;
+                LOGGER.info("Upgrade room planned for {}", price);
+            } else if (plannedEconomyRooms < availableEconomyRooms) {
+                plannedEconomyRooms++;
+                plannedEconomyRoomsSum += price;
+                LOGGER.info("Economy room planned for {}", price);
+            }
+        }
+        return new Occupation(plannedPremiumRooms, plannedPremiumRoomsSum, plannedEconomyRooms, plannedEconomyRoomsSum);
     }
 
 }
