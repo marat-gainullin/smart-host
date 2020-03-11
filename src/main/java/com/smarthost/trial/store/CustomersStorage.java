@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Comparator;
 
+/**
+ * Stores customers offers.
+ * Splits the offers into premium and economy classes to avoid unnecessary iterations while planning in
+ * the situation when there are free premium rooms after planning and a hotel has enough economy rooms.
+ */
 public final class CustomersStorage {
 
     private static final int PREMIUM_THRESHOLD = Integer.getInteger("smarthost.premium.threshold", 100);

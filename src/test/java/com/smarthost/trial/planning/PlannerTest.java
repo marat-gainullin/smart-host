@@ -13,16 +13,16 @@ public class PlannerTest {
 
     @Test
     public void negativeAvailablePremium() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Planner.optimal(-3, 3, customers.getPremiumOffers(), customers.getEconomyOffers());
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                Planner.optimal(-3, 3, customers.getPremiumOffers(), customers.getEconomyOffers())
+        );
     }
 
     @Test
     public void negativeAvailableEconomy() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Planner.optimal(3, -3, customers.getPremiumOffers(), customers.getEconomyOffers());
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                Planner.optimal(3, -3, customers.getPremiumOffers(), customers.getEconomyOffers())
+        );
     }
 
     @Test

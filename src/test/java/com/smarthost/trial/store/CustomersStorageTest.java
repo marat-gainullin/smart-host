@@ -11,11 +11,11 @@ public class CustomersStorageTest {
 
     @Test
     public void duplicatedElements() {
-        customers.getPremiumOffers().add(100);
-        customers.getPremiumOffers().add(100);
-        customers.getEconomyOffers().add(10);
-        customers.getEconomyOffers().add(10);
-        customers.getEconomyOffers().add(10);
+        customers.getPremiumOffers().add(1000);
+        customers.getPremiumOffers().add(1000);
+        customers.getEconomyOffers().add(300);
+        customers.getEconomyOffers().add(300);
+        customers.getEconomyOffers().add(300);
         Assertions.assertEquals(2, customers.getPremiumOffers().size());
         Assertions.assertEquals(3, customers.getEconomyOffers().size());
     }
