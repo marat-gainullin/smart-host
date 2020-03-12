@@ -17,6 +17,9 @@ To run the SpringBoot application, use the following command:
 ```
 gradlew bootRun
 ```
+This will start a web server, listening on port 8080.
+To plan rooms occupation, navigate to `http://localhost:8080/occupations/optimal?availablePremium=3&availableEconomy=3` with with your favorite web browser.
+Fill free to change values of `availablePremium` and `availableEconomy` parameters to plan various occupations.
 
 ## Testing
 To test the the project, use the following command:
