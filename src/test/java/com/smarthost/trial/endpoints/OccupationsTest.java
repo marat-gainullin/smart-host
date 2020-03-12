@@ -20,6 +20,16 @@ public class OccupationsTest {
     private MockMvc restMock;
 
     @Test
+    public void fullPremiumWithUpgrades() throws Exception {
+        restMock.perform(get("/occupations/optimal?availablePremium=8&availableEconomy=2"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string(containsString("\"premiumRooms\":8")))
+                .andExpect(content().string(containsString("\"premiumRoomsSum\":1198")))
+                .andExpect(content().string(containsString("\"economyRooms\":2")))
+                .andExpect(content().string(containsString("\"economyRoomsSum\":45")));
+    }
+
+    @Test
     public void aParameterMissing() throws Exception {
         restMock.perform(get("/occupations/optimal"))
                 .andExpect(status().isBadRequest())
@@ -28,7 +38,7 @@ public class OccupationsTest {
 
     @Test
     public void aParameterOfWrongType() throws Exception {
-        restMock.perform(get("/occupations/optimal?availableEconomy=uiim&availablePremium=rtim"))
+        restMock.perform(get("/occupations/optimal?availablePremium=rtim&availableEconomy=uiim"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(containsString("NumberFormat")));
@@ -36,9 +46,19 @@ public class OccupationsTest {
 
     @Test
     public void aParameterOutOfRange() throws Exception {
-        restMock.perform(get("/occupations/optimal?availableEconomy=7777777777777777777777777777777&availablePremium=2222222222222222222222222222222222"))
+        restMock.perform(get("/occupations/optimal?availablePremium=2222222222222222222222222222222222&availableEconomy=7777777777777777777777777777777"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(containsString("NumberFormat")));
+    }
+
+    @Test
+    public void aNegativeParameter() throws Exception {
+        restMock.perform(get("/occupations/optimal?availablePremium=-2&availableEconomy=-7"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string(containsString("status")))
+                .andExpect(content().string(containsString("code")))
+                .andExpect(content().string(containsString("reason")));
     }
 }

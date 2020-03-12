@@ -28,4 +28,4 @@ To review test code coverage report, use the following command:
 ```
 gradlew jacocoTestReport
 ```
-and navigate to `build/reports/jacoco/test/html/index.html` with your favorite web browser.
+and navigate to `build/reports/jacoco/index.html` with your favorite web browser.
