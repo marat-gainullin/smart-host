@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "2.2.5.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
+    jacoco
 }
 
 repositories {
@@ -24,4 +25,12 @@ tasks.withType<Test> {
             events("passed", "skipped", "failed")
         }
     }
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = false
+        csv.isEnabled = false
+    }
+    dependsOn("test")
 }

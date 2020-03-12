@@ -9,7 +9,7 @@ To build the project from source, use the following commands:
 ```
 git clone https://github.com/marat-gainullin/smart-host.git
 cd smart-host
-gradlew package
+gradlew assemble
 ```
 
 ## Running
@@ -18,8 +18,14 @@ To run the SpringBoot application, use the following command:
 gradlew bootRun
 ```
 
+## Testing
 To test the the project, use the following command:
 ```
 gradlew test
 ```
- 
+
+To review test code coverage report, use the following command:
+```
+gradlew jacocoTestReport
+```
+and navigate to `build/reports/jacoco/test/html/index.html` with your favorite web browser.
