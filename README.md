@@ -2,7 +2,7 @@
 Smart host trial application is a sample hotelier resources manager solution.
 
 ## Requirements
-To build and run this project you need JDK 11.0.1+, Git 2.15.1+ and Gradle 6.1.1+ (If you don't want to install Gradle manually, then use `gradlew` commands).
+To build and run this project you need JDK 11.0.1+, Git 2.15.1+ and Gradle 6.1.1+.
 
 ## Building
 To build the project from source, use the following commands:
@@ -13,7 +13,7 @@ gradlew assemble
 ```
 
 ## Running
-To run the SpringBoot application, use the following command:
+To run the application, use the following command:
 ```
 gradlew bootRun
 ```
@@ -31,4 +31,4 @@ To review test code coverage report, use the following command:
 ```
 gradlew jacocoTestReport
 ```
-and navigate to `build/reports/jacoco/index.html` with your favorite web browser.
+and navigate to `build/reports/jacoco/index.html` with your browser.
