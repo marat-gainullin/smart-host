@@ -12,10 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class OccupationsPlanner {
 
-    @Autowired
-    private CustomersStorage customersStorage;
+    private final Planner planner;
+
+    public OccupationsPlanner(@Autowired CustomersStorage customersStorage) {
+        planner = new Planner(customersStorage.getPremiumOffers(), customersStorage.getEconomyOffers());
+    }
 
     public Occupation optimal(int availablePremiumRooms, int availableEconomyRooms) {
-        return Planner.optimal(availablePremiumRooms, availableEconomyRooms, customersStorage.getPremiumOffers(), customersStorage.getEconomyOffers());
+        return planner.optimal(availablePremiumRooms, availableEconomyRooms);
     }
 }

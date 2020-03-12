@@ -12,21 +12,35 @@ import org.slf4j.LoggerFactory;
  * But they will book lower paying customers into Premium rooms if these rooms would be empty and all Economy rooms will be filled by low paying customers.
  * Highest paying customers below EUR 100 will get preference for the “upgrade”.
  * Customers always only have one specific price they are willing to pay for the night.
+ *
+ * However it is possible to have several offers with same prices from different customers.
  */
 public final class Planner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Planner.class);
+
+    private final SortedBag<Integer> premiumOffers;
+    private final SortedBag<Integer> economyOffers;
+
+    /**
+     * Planner constructor, accepting two ordered collections of offers.
+     *
+     * @param aPremiumOffers {@link SortedBag} of premium offers from customers.
+     * @param aEconomyOffers {@link SortedBag} of economy offers from customers.
+     */
+    public Planner(SortedBag<Integer> aPremiumOffers, SortedBag<Integer> aEconomyOffers) {
+        premiumOffers = aPremiumOffers;
+        economyOffers = aEconomyOffers;
+    }
 
     /**
      * Plans optimal use of premium and economy rooms. Takes into account, that there are might be same prices for different customers.
      *
      * @param availablePremiumRooms The number of available premium rooms.
      * @param availableEconomyRooms The number of available economy rooms.
-     * @param premiumOffers         {@link SortedBag} of premium offers from customers.
-     * @param economyOffers         {@link SortedBag} of economy offers from customers.
      * @return {@link Occupation} instance, describing planned occupation in terms of rooms and money.
      */
-    public static Occupation optimal(int availablePremiumRooms, int availableEconomyRooms, SortedBag<Integer> premiumOffers, SortedBag<Integer> economyOffers) {
+    public Occupation optimal(int availablePremiumRooms, int availableEconomyRooms) {
         if (availablePremiumRooms < 0) {
             throw new IllegalArgumentException("'availablePremiumRooms' can't be less than zero");
         }
